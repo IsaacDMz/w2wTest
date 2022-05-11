@@ -15,29 +15,32 @@ model  User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  email String @unique
-  hash String
+  email     String @unique
+  hash      String
+  username  String @unique @db.VarChar(20)
 
   firstName String?
-  lastName String?
+  lastName  String?
+  location  String?
+  website   String?
+  bio       String? @db.VarChar(500) 
 
-  bookmarks Bookmark[]
+  moviesList Movie[]
 
   @@map("users")
 }
 
 
-model Bookmark{
-  id Int @id @default(autoincrement())
+model Movie{
+  id        Int @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  title String
-  description String?
-  link String
+  movieId   Int
+  rate      Int
 
-  userId Int
-  user User @relation(fields: [userId], references: [id])
+  userId    Int
+  user      User @relation(fields: [userId], references: [id])
 
-  @@map("bookmarks")
+  @@map("movies")
 }
